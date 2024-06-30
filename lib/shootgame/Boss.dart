@@ -16,7 +16,7 @@ class Boss extends SpriteAnimationComponent
 
   static const enemySize = 150.0;
 
-  int HP = 25;
+  int HP = 15;
 
   @override
   Future<void> onLoad() async {
