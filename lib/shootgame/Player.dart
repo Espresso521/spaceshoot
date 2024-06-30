@@ -39,7 +39,7 @@ class Player extends SpriteAnimationComponent
           position: position +
               Vector2(
                 0,
-                -height / 2,
+                -height / 4,
               ),
         );
       },

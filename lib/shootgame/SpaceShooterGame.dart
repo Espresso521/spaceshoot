@@ -7,6 +7,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 
+import 'Boss.dart';
 import 'Enemy.dart';
 import 'GameOverMenuN.dart';
 import 'Player.dart';
@@ -37,8 +38,18 @@ class SpaceShooterGame extends FlameGame
         factory: (index) {
           return Enemy();
         },
-        period: 1,
+        period: 0.5,
         area: Rectangle.fromLTWH(0, 0, size.x, -Enemy.enemySize),
+      ),
+    );
+
+    add(
+      SpawnComponent(
+        factory: (index) {
+          return Boss();
+        },
+        period: 30,
+        area: Rectangle.fromLTWH(0, 0, size.x, -Boss.enemySize),
       ),
     );
   }

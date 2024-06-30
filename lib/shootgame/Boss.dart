@@ -5,29 +5,29 @@ import 'Bullet.dart';
 import 'Explosion.dart';
 import 'SpaceShooterGame.dart';
 
-class Enemy extends SpriteAnimationComponent
+class Boss extends SpriteAnimationComponent
     with HasGameReference<SpaceShooterGame>, CollisionCallbacks {
-  Enemy({
+  Boss({
     super.position,
   }) : super(
     size: Vector2.all(enemySize),
     anchor: Anchor.center,
   );
 
-  static const enemySize = 50.0;
+  static const enemySize = 150.0;
 
-  int HP = 2;
+  int HP = 25;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
     animation = await game.loadSpriteAnimation(
-      'enemy.png',
+      'boss.png',
       SpriteAnimationData.sequenced(
-        amount: 4,
-        stepTime: .2,
-        textureSize: Vector2.all(16),
+        amount: 2,
+        stepTime: .25,
+        textureSize: Vector2(184,162),
       ),
     );
 
@@ -39,7 +39,7 @@ class Enemy extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.y += dt * 250;
+    position.y += dt * 75;
     if (position.y > game.size.y) {
       removeFromParent();
     }

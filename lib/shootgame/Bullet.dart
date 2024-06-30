@@ -8,7 +8,7 @@ class Bullet extends SpriteAnimationComponent
   Bullet({
     super.position,
   }) : super(
-    size: Vector2(25, 50),
+    size: Vector2(40, 50),
     anchor: Anchor.center,
   );
 
@@ -17,11 +17,11 @@ class Bullet extends SpriteAnimationComponent
     await super.onLoad();
 
     animation = await game.loadSpriteAnimation(
-      'bullet.png',
+      'bullets.png',
       SpriteAnimationData.sequenced(
         amount: 4,
         stepTime: .2,
-        textureSize: Vector2(8, 16),
+        textureSize: Vector2(16, 16),
       ),
     );
 
