@@ -81,7 +81,6 @@ class Player extends SpriteAnimationComponent
         onComplete: () {
           // game.showGameOverMenuN();
           game.showGameOverMenu(game.buildContext!);
-          game.pauseEngine();
         },
       ));
     }

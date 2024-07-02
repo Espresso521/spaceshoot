@@ -42,6 +42,7 @@ class Enemy extends SpriteAnimationComponent
     position.y += dt * 250;
     if (position.y > game.size.y) {
       removeFromParent();
+      game.enemies.remove(this);
     }
   }
 
@@ -56,6 +57,7 @@ class Enemy extends SpriteAnimationComponent
       if(HP <=0) {
         removeFromParent();
         game.add(Explosion(position: position, onComplete: (){}));
+        game.enemies.remove(this);
       } else {
         HP = HP -1;
         other.removeFromParent();

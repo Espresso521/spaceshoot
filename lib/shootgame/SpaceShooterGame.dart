@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 
 import 'Boss.dart';
 import 'Enemy.dart';
+import 'Explosion.dart';
 import 'GameOverMenuN.dart';
 import 'Player.dart';
 
 class SpaceShooterGame extends FlameGame
     with PanDetector, HasCollisionDetection {
   late Player player;
+
+  bool isOver = false;
+  List<Enemy> enemies = [];
 
   @override
   Future<void> onLoad() async {
@@ -36,7 +40,13 @@ class SpaceShooterGame extends FlameGame
     add(
       SpawnComponent(
         factory: (index) {
-          return Enemy();
+          if (isOver)
+            return PositionComponent();
+          else {
+            var e = Enemy();
+            enemies.add(e);
+            return e;
+          }
         },
         period: 0.5,
         area: Rectangle.fromLTWH(0, 0, size.x, -Enemy.enemySize),
@@ -56,28 +66,33 @@ class SpaceShooterGame extends FlameGame
 
   @override
   void onPanUpdate(DragUpdateInfo info) {
-    player.move(info.delta.global);
+    if (!isOver) player.move(info.delta.global);
   }
 
   @override
   void onPanStart(DragStartInfo info) {
-    player.startShooting();
+    if (!isOver) player.startShooting();
   }
 
   @override
   void onPanEnd(DragEndInfo info) {
-    player.stopShooting();
+    if (!isOver) player.stopShooting();
   }
 
   void showGameOverMenu(BuildContext context) {
+    isOver = true;
     overlays.add('GameOverMenu');
+    for (var item in enemies) {
+      item.removeFromParent();
+      add(Explosion(position: item.position, onComplete: (){}));
+    }
+    enemies.clear();
   }
 
   void restartGame(BuildContext context) {
     overlays.remove('GameOverMenu');
-    remove(player);
-    player = Player();
     add(player);
+    isOver = false;
   }
 
   void showGameOverMenuN() {
@@ -94,5 +109,3 @@ class SpaceShooterGame extends FlameGame
     add(player);
   }
 }
-
-
