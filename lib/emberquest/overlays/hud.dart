@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../ember_quest.dart';
 import 'heart.dart';
 
+double hudMarginTop = 56;
 class Hud extends PositionComponent with HasGameReference<EmberQuestGame> {
   Hud({
     super.position,
@@ -28,7 +29,7 @@ class Hud extends PositionComponent with HasGameReference<EmberQuestGame> {
         ),
       ),
       anchor: Anchor.center,
-      position: Vector2(game.size.x - 60, 20),
+      position: Vector2(game.size.x - 60, hudMarginTop),
     );
     add(_scoreTextComponent);
 
@@ -36,7 +37,7 @@ class Hud extends PositionComponent with HasGameReference<EmberQuestGame> {
     add(
       SpriteComponent(
         sprite: starSprite,
-        position: Vector2(game.size.x - 100, 20),
+        position: Vector2(game.size.x - 100, hudMarginTop),
         size: Vector2.all(32),
         anchor: Anchor.center,
       ),
