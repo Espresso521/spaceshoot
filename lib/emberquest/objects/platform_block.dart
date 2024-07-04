@@ -60,6 +60,7 @@ class PlatformBlock extends SpriteComponent
           isVibrate = false;
           });
       }
+      other.removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
