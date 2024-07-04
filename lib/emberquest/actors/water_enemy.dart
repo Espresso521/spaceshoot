@@ -2,11 +2,13 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+import '../animate/WaterExplosion.dart';
 import '../ember_quest.dart';
 import '../managers/segment_manager.dart';
+import '../objects/fireball.dart';
 
 class WaterEnemy extends SpriteAnimationComponent
-    with HasGameReference<EmberQuestGame> {
+    with HasGameReference<EmberQuestGame>, CollisionCallbacks {
   final Vector2 gridPosition;
   double xOffset;
 
@@ -21,6 +23,7 @@ class WaterEnemy extends SpriteAnimationComponent
   Future<void> onLoad() async {
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('water_enemy.png'),
+      // game.images.fromCache('layers/enemy.png'),
       SpriteAnimationData.sequenced(
         amount: 2,
         textureSize: Vector2.all(16),
@@ -31,7 +34,7 @@ class WaterEnemy extends SpriteAnimationComponent
       (gridPosition.x * size.x) + xOffset,
       game.size.y - (gridPosition.y * size.y),
     );
-    add(RectangleHitbox(collisionType: CollisionType.passive));
+    add(RectangleHitbox());
     add(
       MoveEffect.by(
         Vector2(-2 * size.x, 0),
@@ -52,5 +55,23 @@ class WaterEnemy extends SpriteAnimationComponent
       removeFromParent();
     }
     super.update(dt);
+  }
+
+  int HP = 2;
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
+    if (other is FireBall) {
+      if(HP <=0) {
+        removeFromParent();
+        game.add(WaterExplosion(position: Vector2(position.x, position.y - size.y / 2), onComplete: (){}));
+      } else {
+        HP = HP -1;
+        other.removeFromParent();
+      }
+    }
+    super.onCollisionStart(intersectionPoints, other);
   }
 }

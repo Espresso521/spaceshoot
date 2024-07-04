@@ -11,10 +11,10 @@ void main() {
     GameWidget<EmberQuestGame>.controlled(
       gameFactory: EmberQuestGame.new,
       overlayBuilderMap: {
-        'MainMenu': (_, game) => MainMenu(game: game),
+        // 'MainMenu': (_, game) => MainMenu(game: game),
         'GameOver': (_, game) => GameOver(game: game),
       },
-      initialActiveOverlays: const ['MainMenu'],
+      // initialActiveOverlays: const ['MainMenu'],
     ),
   );
 }

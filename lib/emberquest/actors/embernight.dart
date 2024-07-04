@@ -2,28 +2,35 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/input.dart';
+import 'package:flame/sprite.dart';
 import 'package:flame_game/emberquest/actors/water_enemy.dart';
 import 'package:flutter/services.dart';
 
 import '../ember_quest.dart';
 import '../managers/segment_manager.dart';
+import '../objects/fireball.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
 
+/// キャラクターの状態
+enum KnightState {walk, attack}
 
-class EmberPlayer extends SpriteAnimationComponent
+class EmberNightPlayer extends SpriteAnimationGroupComponent
     with KeyboardHandler, CollisionCallbacks, HasGameReference<EmberQuestGame> {
-  EmberPlayer(this.joystick,
+  EmberNightPlayer(this.joystick,this.jumpButton, this.attackButton,
   {
     required super.position,
-  }) : super(size: Vector2.all(actorsSize), anchor: Anchor.center);
+  }) : super(size: Vector2.all(actorsSize*1.25), anchor: Anchor.center);
+
+  // サイズの定義
+  final _knightSize = Vector2(587.0, 707.0);
 
   final Vector2 velocity = Vector2.zero();
   final Vector2 fromAbove = Vector2(0, -1);
   final double gravity = 15;
-  final double jumpSpeed = 600;
-  final double moveSpeed = 200;
+  final double jumpSpeed = 500;
+  final double moveSpeed = 150;
   final double terminalVelocity = 150;
   int horizontalDirection = 0;
 
@@ -32,21 +39,53 @@ class EmberPlayer extends SpriteAnimationComponent
   bool hitByEnemy = false;
 
   final JoystickComponent joystick;
+  final HudButtonComponent jumpButton;
+  final HudButtonComponent attackButton;
 
   @override
   Future<void> onLoad() async {
-    animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('ember.png'),
-      SpriteAnimationData.sequenced(
-        amount: 4,
-        textureSize: Vector2.all(16),
-        stepTime: 0.12,
-      ),
+    // スプライトシートを定義する
+    final spriteSheet = SpriteSheet(
+      image: await game.images.load('layers/emberknight.png'),
+      srcSize: _knightSize,
     );
+    jumpButton.onPressed = jump;
+    attackButton.onPressed = attackStart;
+
+    // スプライトシートから作成したアニメーションを設定する
+    animations = {
+      KnightState.walk: spriteSheet.createAnimation(row: 0, to: 10, stepTime: 0.1),
+      KnightState.attack: spriteSheet.createAnimation(row: 1, to: 10, stepTime: 0.05, loop: false),
+    };
+
+    // その他のプロパティを設定する
+    current = KnightState.walk;
+    // 攻撃アニメーション終了イベントを設定する
+    animationTickers?[KnightState.attack]?.onComplete = attackEnd;
 
     add(
       CircleHitbox(),
     );
+    super.onLoad();
+  }
+
+  void jump() {
+    if(!hasJumped) {
+      hasJumped = true;
+    }
+  }
+
+  /// 攻撃開始
+  void attackStart() {
+    current = KnightState.attack;
+    game.add(FireBall(position: position));
+  }
+
+  /// 攻撃終了
+  void attackEnd() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    animationTickers?[KnightState.attack]?.reset();
+    current = KnightState.walk;
   }
 
   @override
@@ -67,7 +106,6 @@ class EmberPlayer extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    print("huze : joystick is ${joystick.toString()}");
     if (!joystick.delta.isZero()) {
       if(joystick.delta.x > 0) {
         horizontalDirection = 1;
@@ -119,6 +157,8 @@ class EmberPlayer extends SpriteAnimationComponent
     if (game.health <= 0) {
       removeFromParent();
       joystick.removeFromParent();
+      jumpButton.removeFromParent();
+      attackButton.removeFromParent();
     }
 
     // Flip ember if needed.

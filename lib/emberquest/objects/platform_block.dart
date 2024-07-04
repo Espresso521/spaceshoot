@@ -1,11 +1,13 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 
 import '../ember_quest.dart';
 import '../managers/segment_manager.dart';
+import 'fireball.dart';
 
 class PlatformBlock extends SpriteComponent
-    with HasGameReference<EmberQuestGame> {
+    with HasGameReference<EmberQuestGame>, CollisionCallbacks {
   final Vector2 gridPosition;
   double xOffset;
 
@@ -24,7 +26,7 @@ class PlatformBlock extends SpriteComponent
       (gridPosition.x * size.x) + xOffset,
       game.size.y - (gridPosition.y * size.y),
     );
-    add(RectangleHitbox(collisionType: CollisionType.passive));
+    add(RectangleHitbox());
   }
 
   @override
@@ -35,5 +37,30 @@ class PlatformBlock extends SpriteComponent
       removeFromParent();
     }
     super.update(dt);
+  }
+
+  bool isVibrate = false;
+
+  @override
+  void onCollisionStart(
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
+    if (other is FireBall) {
+      if (!isVibrate) {
+        isVibrate = true;
+        add(SizeEffect.by(
+            Vector2(-1, -1),
+            EffectController(
+              duration: 0.1,
+              reverseDuration: 0.1,
+              infinite: false,
+            ))
+          ..onComplete = () {
+          isVibrate = false;
+          });
+      }
+    }
+    super.onCollisionStart(intersectionPoints, other);
   }
 }
