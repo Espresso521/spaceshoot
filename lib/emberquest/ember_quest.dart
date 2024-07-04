@@ -14,6 +14,8 @@ import 'objects/platform_block.dart';
 import 'objects/star.dart';
 import 'overlays/hud.dart';
 
+int defaultHP = 10;
+
 class EmberQuestGame extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
 
@@ -27,7 +29,7 @@ class EmberQuestGame extends FlameGame
   late UniqueKey lastBlockKey;
 
   int starsCollected = 0;
-  int health = 6;
+  int health = defaultHP;
   double cloudSpeed = 0.0;
   double objectSpeed = 0.0;
 
@@ -36,7 +38,7 @@ class EmberQuestGame extends FlameGame
 
     // 加载背景音乐
     FlameAudio.bgm.initialize();
-    await FlameAudio.bgm.play('audio/bg_music.ogg', volume: 0.5);
+    await FlameAudio.bgm.play('bg_music.ogg', volume: 0.5);
 
     //debugMode = true; // Uncomment to see the bounding boxes
     await images.loadAll([
@@ -177,7 +179,7 @@ class EmberQuestGame extends FlameGame
 
   void reset() {
     starsCollected = 0;
-    health = 3;
+    health = defaultHP;
     lastBlockXPosition = 0;
     initializeGame(loadHud: false);
   }

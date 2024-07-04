@@ -29,8 +29,8 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
   final Vector2 velocity = Vector2.zero();
   final Vector2 fromAbove = Vector2(0, -1);
   final double gravity = 15;
-  final double jumpSpeed = 500;
-  final double moveSpeed = 150;
+  final double jumpSpeed = 430;
+  final double moveSpeed = 125;
   final double terminalVelocity = 150;
   int horizontalDirection = 0;
 
@@ -78,7 +78,7 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
   /// 攻撃開始
   void attackStart() {
     current = KnightState.attack;
-    game.add(FireBall(position: position));
+    game.add(FireBall(lastOrientation, position: position));
   }
 
   /// 攻撃終了
@@ -104,13 +104,16 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
     return true;
   }
 
+  int lastOrientation = 1;
   @override
   void update(double dt) {
     if (!joystick.delta.isZero()) {
       if(joystick.delta.x > 0) {
         horizontalDirection = 1;
+        lastOrientation = 1;
       } else if(joystick.delta.x < 0) {
         horizontalDirection = -1;
+        lastOrientation = -1;
       } else {
         horizontalDirection = 0;
       }
