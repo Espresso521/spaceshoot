@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import 'actors/embernight.dart';
@@ -26,12 +27,17 @@ class EmberQuestGame extends FlameGame
   late UniqueKey lastBlockKey;
 
   int starsCollected = 0;
-  int health = 3;
+  int health = 6;
   double cloudSpeed = 0.0;
   double objectSpeed = 0.0;
 
   @override
   Future<void> onLoad() async {
+
+    // 加载背景音乐
+    FlameAudio.bgm.initialize();
+    await FlameAudio.bgm.play('audio/bg_music.ogg', volume: 0.5);
+
     //debugMode = true; // Uncomment to see the bounding boxes
     await images.loadAll([
       'block.png',
