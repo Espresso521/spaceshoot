@@ -4,6 +4,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/input.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_game/emberquest/actors/water_enemy.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../ember_quest.dart';
@@ -29,7 +30,7 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
   final Vector2 velocity = Vector2.zero();
   final Vector2 fromAbove = Vector2(0, -1);
   final double gravity = 15;
-  final double jumpSpeed = 430;
+  final double jumpSpeed = 600;
   final double moveSpeed = 125;
   final double terminalVelocity = 150;
   int horizontalDirection = 0;
@@ -90,37 +91,45 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    horizontalDirection = 0;
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowLeft))
-        ? -1
-        : 0;
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowRight))
-        ? 1
-        : 0;
+    if((keysPressed.contains(LogicalKeyboardKey.keyA) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft))) {
+      horizontalDirection = -1;
+      lastOrientation = -1;
+    } else if(keysPressed.contains(LogicalKeyboardKey.keyD) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+      horizontalDirection = 1;
+      lastOrientation = 1;
+    } else {
+      horizontalDirection = 0;
+    }
 
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
+
+    if(keysPressed.contains(LogicalKeyboardKey.keyK)||
+        keysPressed.contains(LogicalKeyboardKey.keyS)) {
+      attackStart();
+    }
     return true;
   }
 
   int lastOrientation = 1;
   @override
   void update(double dt) {
-    if (!joystick.delta.isZero()) {
-      if(joystick.delta.x > 0) {
-        horizontalDirection = 1;
-        lastOrientation = 1;
-      } else if(joystick.delta.x < 0) {
-        horizontalDirection = -1;
-        lastOrientation = -1;
+    if (!kIsWeb) {
+      if (!joystick.delta.isZero()) {
+        if (joystick.delta.x > 0) {
+          horizontalDirection = 1;
+          lastOrientation = 1;
+        } else if (joystick.delta.x < 0) {
+          horizontalDirection = -1;
+          lastOrientation = -1;
+        } else {
+          horizontalDirection = 0;
+        }
       } else {
         horizontalDirection = 0;
       }
-    } else {
-      horizontalDirection = 0;
     }
-
 
     velocity.x = horizontalDirection * moveSpeed;
     game.objectSpeed = 0;

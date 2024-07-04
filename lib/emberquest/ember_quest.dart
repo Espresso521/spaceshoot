@@ -38,7 +38,7 @@ class EmberQuestGame extends FlameGame
 
     // 加载背景音乐
     FlameAudio.bgm.initialize();
-    await FlameAudio.bgm.play('bg_music.ogg', volume: 0.5);
+    //await FlameAudio.bgm.play('bg_music.ogg', volume: 0.5);
 
     //debugMode = true; // Uncomment to see the bounding boxes
     await images.loadAll([

@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../ember_quest.dart';
@@ -41,7 +42,8 @@ class MainMenu extends StatelessWidget {
                 width: 200,
                 height: 75,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await FlameAudio.bgm.play('bg_music.ogg', volume: 0.5);
                     game.overlays.remove('MainMenu');
                   },
                   style: ElevatedButton.styleFrom(
