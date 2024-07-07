@@ -75,6 +75,7 @@ class EmberQuestGame extends FlameGame
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
+    print("huze: segmentIndex is $segmentIndex");
     for (final block in segments[segmentIndex]) {
       switch (block.blockType) {
         case GroundBlock:
@@ -110,7 +111,7 @@ class EmberQuestGame extends FlameGame
     final segmentsToLoad = (size.x / segmentsWidth).ceil();
     segmentsToLoad.clamp(0, segments.length);
 
-    for (var i = 0; i <= segmentsToLoad; i++) {
+    for (var i = 0; i < segmentsToLoad; i++) {
       loadGameSegments(i, (segmentsWidth * i).toDouble());
     }
 
