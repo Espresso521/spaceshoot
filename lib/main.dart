@@ -1,4 +1,5 @@
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'emberquest/ember_quest.dart';
@@ -7,14 +8,20 @@ import 'emberquest/overlays/main_menu.dart';
 
 
 void main() {
+
+  bool isMobilePlatform() {
+    return !kIsWeb && (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS);
+  }
+
   runApp(
     GameWidget<EmberQuestGame>.controlled(
       gameFactory: EmberQuestGame.new,
       overlayBuilderMap: {
-        'MainMenu': (_, game) => MainMenu(game: game),
+        if(!isMobilePlatform()) 'MainMenu': (_, game) => MainMenu(game: game),
         'GameOver': (_, game) => GameOver(game: game),
       },
-      initialActiveOverlays: const ['MainMenu'],
+      initialActiveOverlays: !isMobilePlatform() ? const ['MainMenu'] : const [],
     ),
   );
 }
