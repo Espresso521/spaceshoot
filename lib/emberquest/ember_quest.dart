@@ -14,7 +14,7 @@ import 'objects/platform_block.dart';
 import 'objects/star.dart';
 import 'overlays/hud.dart';
 
-int defaultHP = 10;
+int defaultHP = 3;
 
 class EmberQuestGame extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
