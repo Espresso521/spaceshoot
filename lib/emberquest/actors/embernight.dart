@@ -4,6 +4,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/input.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_game/emberquest/actors/water_enemy.dart';
+import 'package:flame_game/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +31,7 @@ class EmberNightPlayer extends SpriteAnimationGroupComponent
   final Vector2 velocity = Vector2.zero();
   final Vector2 fromAbove = Vector2(0, -1);
   final double gravity = 15;
-  final double jumpSpeed = 600;
+  final double jumpSpeed = isMobilePlatform() ? 400 : 600;
   final double moveSpeed = 125;
   final double terminalVelocity = 150;
   int horizontalDirection = 0;
