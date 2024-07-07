@@ -30,4 +30,4 @@ jobs:
         uses: bluefireteam/flutter-gh-pages@v8
         with:
           baseHref: spaceshoot
-          webDir: build/web  # 指定构建输出目录
+          webRenderer: canvaskit
