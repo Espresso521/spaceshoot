@@ -223,7 +223,7 @@ class Map extends Component {
   }
 }
 
-class Rock extends SpriteComponent with HasGameRef, TapCallbacks {
+class Rock extends SpriteAnimationComponent with HasGameRef, TapCallbacks {
   Rock(Vector2 position)
       : super(
     position: position,
@@ -234,8 +234,22 @@ class Rock extends SpriteComponent with HasGameRef, TapCallbacks {
 
   @override
   Future<void> onLoad() async {
-    sprite = await game.loadSprite('nine-box.png');
-    paint = Paint()..color = Colors.white;
+
+    // 生成随机数
+    final random = Random();
+    final spriteIndex = random.nextInt(2); // 生成0或1的随机数
+
+    // 根据随机数选择要加载的sprite
+    String spriteFile = spriteIndex == 0 ? 'mage.png' : 'eknight.png';
+
+    animation = await game.loadSpriteAnimation(
+      spriteFile,
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        textureSize: Vector2.all(16),
+        stepTime: 0.15,
+      ),
+    );
     add(RectangleHitbox());
   }
 
