@@ -6,14 +6,12 @@ import 'emberquest/ember_quest.dart';
 import 'emberquest/overlays/game_over.dart';
 import 'emberquest/overlays/main_menu.dart';
 
+bool isMobilePlatform() {
+  return !kIsWeb && (defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS);
+}
 
 void main() {
-
-  bool isMobilePlatform() {
-    return !kIsWeb && (defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS);
-  }
-
   runApp(
     GameWidget<EmberQuestGame>.controlled(
       gameFactory: EmberQuestGame.new,

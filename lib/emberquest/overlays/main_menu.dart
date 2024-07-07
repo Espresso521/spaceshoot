@@ -1,6 +1,7 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import '../ember_quest.dart';
 
 class MainMenu extends StatelessWidget {
@@ -13,6 +14,18 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     const blackTextColor = Color.fromRGBO(0, 0, 0, 1.0);
     const whiteTextColor = Color.fromRGBO(255, 255, 255, 1.0);
+
+    String getTextContent(bool isPhone) {
+      if(!isPhone) {
+        return '''Use WASD or Arrow Keys for movement.
+Space bar to jump.
+Collect as many stars as you can and avoid enemies!''';
+      } else {
+        return '''Use JoyStick for movement.
+Space bar to jump.
+Collect as many stars as you can and avoid enemies!''';
+      }
+    }
 
     return Material(
       color: Colors.transparent,
@@ -59,12 +72,10 @@ class MainMenu extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                '''Use WASD or Arrow Keys for movement.
-Space bar to jump.
-Collect as many stars as you can and avoid enemies!''',
+              Text(
+                getTextContent(isMobilePlatform()),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: whiteTextColor,
                   fontSize: 14,
                 ),
