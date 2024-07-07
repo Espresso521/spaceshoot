@@ -2,16 +2,32 @@ name: Gh-Pages
 
 on:
   push:
-    branches: [ gh-pages ]
+    branches: [ main ]  # 注意这里是你的源码分支，而不是 gh-pages 分支
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/flutter-gh-pages@v8
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'  # 可以根据需要指定 Flutter 版本
+
+      - name: Enable Flutter Web
+        run: flutter config --enable-web
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: flutter build web --release --web-renderer canvaskit
+
+      - name: Deploy to GitHub Pages
+        uses: bluefireteam/flutter-gh-pages@v8
         with:
           baseHref: spaceshoot
-          webRenderer: canvaskit
+          webDir: build/web  # 指定构建输出目录
