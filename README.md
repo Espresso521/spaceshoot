@@ -4,9 +4,13 @@ A Flutter project that build game with flame.
 
 ## Getting Started
 
-<img src="gif/myfirstgame" width="320">
+<img src="./gif/myfirstgame.gif" width="480">
 
 This is the first side-scrolling game I’ve made using Flutter and Flame, and it only took me 5 days. 
+
+It's can be play by web and phone. 📱
+
+<img src="./gif/phoneVersion" width="480">
 
 It’s truly amazing. ⭐
 
