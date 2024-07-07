@@ -15,7 +15,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'  # 可以根据需要指定 Flutter 版本
+          flutter-version: '3.22.2'  # 可以根据需要指定 Flutter 版本
 
       - name: Enable Flutter Web
         run: flutter config --enable-web
