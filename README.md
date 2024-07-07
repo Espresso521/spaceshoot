@@ -10,7 +10,7 @@ This is the first side-scrolling game I’ve made using Flutter and Flame, and i
 
 It's can be play by web and phone. 📱
 
-<img src="./gif/phoneVersion" width="480">
+<img src="./gif/phoneVersion.gif" width="480">
 
 It’s truly amazing. ⭐
 
