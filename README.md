@@ -1,16 +1,19 @@
 # flame_game
 
-A new Flutter project.
+A Flutter project that build game with flame.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+<img src="gif/myfirstgame" width="320">
 
-A few resources to get you started if this is your first Flutter project:
+This is the first side-scrolling game I’ve made using Flutter and Flame, and it only took me 5 days. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+It’s truly amazing. ⭐
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I want to create a fun game for my son. 🧒
+
+- [FLAME](https://docs.flame-engine.org/latest/index.html)
+
+You can checkout myspaceshoot branch to check the source code. 🥦
+
+
