@@ -2,7 +2,7 @@ name: Gh-Pages
 
 on:
   push:
-    branches: [ myspaceshoot ]  # 注意这里是你的源码分支，而不是 gh-pages 分支
+    branches: [ myspaceshoot ]
 
 jobs:
   build:
