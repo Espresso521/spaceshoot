@@ -5,12 +5,12 @@ import 'enemy_component.dart';
 
 class BulletComponent extends SpriteAnimationComponent
     with HasGameRef, CollisionCallbacks {
-  static const speed = 500.0;
+  static const speed = 600.0;
   late final Vector2 velocity;
   final Vector2 deltaPosition = Vector2.zero();
 
   BulletComponent({required super.position, super.angle})
-      : super(size: Vector2(10, 20), anchor: Anchor.center);
+      : super(size: Vector2(15, 30), anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {

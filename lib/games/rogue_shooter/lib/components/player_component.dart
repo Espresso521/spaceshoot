@@ -33,7 +33,7 @@ class PlayerComponent extends SpriteAnimationComponent
     );
   }
 
-  final _bulletAngles = [0.5, 0.3, 0.0, -0.5, -0.3];
+  final _bulletAngles = [1.0, 0.75, 0.5, 0.25, 0.0, -0.25, -0.5, -0.75, -1.0];
   void _createBullet() {
     game.addAll(
       _bulletAngles.map(
