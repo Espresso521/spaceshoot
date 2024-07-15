@@ -76,6 +76,7 @@ flutter:
     - assets/images/layers/
     - assets/images/parallax/
     - assets/images/rogue_shooter/
+    - assets/images/tile_maps/
     - assets/layers/
     - assets/audio/
   # To add assets to your application, add an assets section, like this:
