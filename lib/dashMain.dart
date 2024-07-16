@@ -1,4 +1,5 @@
 import 'package:dashbook/dashbook.dart';
+import 'package:flame_game/parallax/parallax.dart';
 import 'package:flame_game/rendering/rendering.dart';
 import 'package:flame_game/tiled/tiled.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ void main() {
   //addCameraAndViewportStories(dashbook);
   //addGameStories(dashbook);
   //addRenderingStories(dashbook);
-  addTiledStories(dashbook);
+  //addTiledStories(dashbook);
+  addParallaxStories(dashbook);
   runApp(dashbook);
 }
