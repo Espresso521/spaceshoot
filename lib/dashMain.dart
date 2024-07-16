@@ -12,7 +12,7 @@ void main() {
   //addCameraAndViewportStories(dashbook);
   //addGameStories(dashbook);
   //addRenderingStories(dashbook);
-  //addTiledStories(dashbook);
-  addParallaxStories(dashbook);
+  addTiledStories(dashbook);
+  //addParallaxStories(dashbook);
   runApp(dashbook);
 }
