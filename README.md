@@ -20,4 +20,7 @@ I want to create a fun game for my son. 🧒
 
 You can checkout myspaceshoot branch to check the source code. 🥦
 
+I delpoyed the game by github action, have a try!   
+https://espresso521.github.io/spaceshoot/
+
 
